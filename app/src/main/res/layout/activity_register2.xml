@@ -15,10 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:elevation="4dp"
-            app:shape_arc_cropDirection="outside"
             app:shape_arc_height="20dp"
-            app:shape_arc_position="bottom"
-            >
+            app:shape_arc_position="bottom">
+
+
+
 
 
 
@@ -44,6 +45,24 @@
                 android:src="@drawable/ic_person"
                 android:layout_gravity="center"
                 android:layout_marginTop="51dp"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_return"
+            app:civ_circle_background_color="@color/transparente"
+            android:layout_margin="15dp"
+            android:id="@+id/cirleimageback"
+            />
+
+
+
+
+
+
+
+
+
         </io.github.florent37.shapeofview.shapes.ArcView>
 
         <LinearLayout

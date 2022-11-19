@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "189632917907",
+    "project_id": "papeleriaclo3",
+    "storage_bucket": "papeleriaclo3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189632917907:android:47578d63419fa53960f866",
+        "android_client_info": {
+          "package_name": "com.example.papeleriaclo3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189632917907-6onkins1rc96uj304ja9ppov8j5s2br5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.papeleriaclo3",
+            "certificate_hash": "2ccd6a5dacfda98b9c32ddb1d725401a97389149"
+          }
+        },
+        {
+          "client_id": "189632917907-5vrl69vjgc05oli1f9epp3bhtrlfe11b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAucZ5OrG-b0iiDoXU1N2YI_-nfwmsBYA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189632917907-5vrl69vjgc05oli1f9epp3bhtrlfe11b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
