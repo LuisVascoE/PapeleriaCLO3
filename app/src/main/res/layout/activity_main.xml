@@ -8,23 +8,23 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        
+
         <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/papeleriaclo3"
             android:layout_gravity="center"
-            />
+            android:src="@drawable/papeleriaclo3" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="40dp"
@@ -56,9 +56,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="40dp"
@@ -69,19 +69,18 @@
                 />
 
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textInputEditTextPassword"
-                    android:textColor="@color/white"
-                    android:inputType="text"
-                    android:hint="Contraseña"
                     android:background="@color/transparente"
+                    android:hint="Contraseña"
+                    android:inputType="text"
+                    android:textColor="@color/white"
 
                     />
 
@@ -90,51 +89,54 @@
         </LinearLayout>
 
 
+        "
 
-
-        
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Iniciar Sesión"
-            android:background="@drawable/rounded_button"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            />
+            android:background="@drawable/rounded_button"
+            android:text="Iniciar Sesión" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btnLoginSignInGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="100dp"
+            android:background="@drawable/rounded_button" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="200dp"
             android:layout_marginRight="20dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¿No tienes cuenta?"
-                android:textSize="17sp"
                 android:layout_marginRight="10dp"
+                android:text="¿No tienes cuenta?"
                 android:textColor="@color/white"
-                />
+                android:textSize="17sp" />
+
             <TextView
+                android:id="@+id/TextViewRegistrer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/TextViewRegistrer"
                 android:text="Registrate"
-                android:textSize="17sp"
-                android:textStyle="bold"
                 android:textColor="@color/white"
-                />
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
-
-
-
 
 
     </LinearLayout>
