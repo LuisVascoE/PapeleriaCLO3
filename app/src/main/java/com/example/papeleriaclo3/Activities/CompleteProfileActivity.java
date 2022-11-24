@@ -1,4 +1,4 @@
-package com.example.papeleriaclo3;
+package com.example.papeleriaclo3.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.papeleriaclo3.R;
+import com.example.papeleriaclo3.models.User;
+import com.example.papeleriaclo3.providers.AuthProviders;
+import com.example.papeleriaclo3.providers.UsersProviders;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -22,9 +25,10 @@ import java.util.Map;
 public class CompleteProfileActivity extends AppCompatActivity {
     TextInputEditText mTextInputUsername;
     Button mButtonRegister;
-    FirebaseAuth mAuth;
-    FirebaseFirestore mFirestore;
-
+    //FirebaseAuth mAuth;
+    //FirebaseFirestore mFirestore;
+    UsersProviders mUsersproviders;
+    AuthProviders mAuthProviders;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +37,8 @@ public class CompleteProfileActivity extends AppCompatActivity {
         mTextInputUsername=findViewById(R.id.textInputUsernameC);
         mButtonRegister=findViewById(R.id.btnregisterC);
 
-        mAuth=FirebaseAuth.getInstance();
-        mFirestore=FirebaseFirestore.getInstance();
+        mAuthProviders=new AuthProviders();
+        mUsersproviders=new UsersProviders();
 
         mButtonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,10 +60,12 @@ public class CompleteProfileActivity extends AppCompatActivity {
     }
 
     private void updateUser(String username) {
-        String id=mAuth.getCurrentUser().getUid();
-        Map<String, Object>map=new HashMap<>();
-        map.put("username", username);
-        mFirestore.collection("Users").document(id).update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+        String id=mAuthProviders.getUid();
+        User user=new User();
+        user.setUsername(username);
+        user.setId(id);
+
+        mUsersproviders.update(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
