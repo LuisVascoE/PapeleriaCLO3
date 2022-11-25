@@ -3,6 +3,8 @@ package com.example.papeleriaclo3.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,15 +18,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import dmax.dialog.SpotsDialog;
 
 public class RegisterActivity2 extends AppCompatActivity {
 
@@ -38,6 +37,7 @@ public class RegisterActivity2 extends AppCompatActivity {
     //FirebaseFirestore mFirestore;
     AuthProviders mAuthProvider;
     UsersProviders mUsersProvider;
+    AlertDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -53,6 +53,13 @@ public class RegisterActivity2 extends AppCompatActivity {
 
         mAuthProvider=new AuthProviders();
         mUsersProvider=new UsersProviders();
+
+        mDialog=new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Espere un momento...")
+                .setCancelable(false)
+                .build();
+
 
         mButtonRegister=findViewById(R.id.btnregister);
 
@@ -108,6 +115,7 @@ public class RegisterActivity2 extends AppCompatActivity {
     }
 
     private void createUser( final String username, final String email, String password) {
+        mDialog.show();
         mAuthProvider.register(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -121,8 +129,12 @@ public class RegisterActivity2 extends AppCompatActivity {
                     mUsersProvider.create(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+                            mDialog.dismiss();
                             if (task.isSuccessful()){
                                 Toast.makeText(RegisterActivity2.this, "Usuario almacenado correctamente", Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(RegisterActivity2.this, HomeActivity2.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
                             }else {
                                 Toast.makeText(RegisterActivity2.this, "Usuario no se almaceno", Toast.LENGTH_SHORT).show();
                             }
@@ -131,6 +143,7 @@ public class RegisterActivity2 extends AppCompatActivity {
                     });
                     Toast.makeText(RegisterActivity2.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
                 }else {
+                    mDialog.dismiss();
                     Toast.makeText(RegisterActivity2.this, "Registro fallido", Toast.LENGTH_SHORT).show();
                 }
 
