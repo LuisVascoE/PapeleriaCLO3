@@ -10,12 +10,17 @@ import android.view.ViewGroup;
 
 import com.example.papeleriaclo3.R;
 
+import retrofit2.Retrofit;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FiltersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class FiltersFragment extends Fragment {
+
+    private Retrofit retrofit;
+    private static final String TAG="POKEDEX";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
