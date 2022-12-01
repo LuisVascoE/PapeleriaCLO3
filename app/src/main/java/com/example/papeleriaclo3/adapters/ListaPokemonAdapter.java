@@ -1,5 +1,6 @@
 package com.example.papeleriaclo3.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.papeleriaclo3.R;
 import com.example.papeleriaclo3.models.Pokemon;
 
@@ -17,8 +20,10 @@ import java.util.ArrayList;
 public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapter.ViewHolder>{
 
     private ArrayList<Pokemon> dataset;
+    private Context context;
 
-    public ListaPokemonAdapter() {
+    public ListaPokemonAdapter(Context context) {
+        this.context=context;
         dataset=new ArrayList<>();
     }
 
@@ -33,6 +38,11 @@ public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Pokemon p=dataset.get(position);
         holder.nombreTextView.setText(p.getName());
+        Glide.with(context)
+                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+p.getNumber()+ ".png")
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.fotoImageView);
 
 
     }
@@ -40,6 +50,11 @@ public class ListaPokemonAdapter extends RecyclerView.Adapter<ListaPokemonAdapte
     @Override
     public int getItemCount() {
         return dataset.size();
+    }
+
+    public void adicionarListaPokemon(ArrayList<Pokemon> listapokemon) {
+        dataset.addAll(listapokemon);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
