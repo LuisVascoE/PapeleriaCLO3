@@ -42,14 +42,33 @@
                     android:layout_height="120dp"
                     android:background="@color/transparente"
                     android:layout_weight="1"
-                    android:layout_marginRight="80dp"
-                    android:layout_marginLeft="80dp"
+                    android:layout_marginRight="15dp"
                     app:cardCornerRadius="15dp">
 
                     <ImageView
+                        android:id="@+id/imageViewPost1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/ic_subir_foto"/>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:background="@color/transparente"
+                    android:layout_weight="1"
+                    android:layout_marginRight="15dp"
+
+                    app:cardCornerRadius="15dp">
+
+                    <ImageView
+                        android:id="@+id/imageViewPost2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/camara"/>
 
 
 
@@ -138,7 +157,7 @@
 
         </LinearLayout>
         <TextView
-            android:id="@+id/TextViewCardCategory"
+            android:id="@+id/TextViewCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CATEGORIAS"
@@ -174,6 +193,7 @@
                     >
 
                     <ImageView
+                        android:id="@+id/imageViewFiccion"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/pila_de_libros_ciencia"/>
@@ -212,6 +232,7 @@
                     app:cardElevation="10dp">
 
                     <ImageView
+                        android:id="@+id/imageViewAventuras"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/libro_aventura" />
@@ -247,6 +268,7 @@
                     app:cardElevation="10dp">
 
                     <ImageView
+                        android:id="@+id/imageViewParanormal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/paranormal" />
@@ -286,6 +308,7 @@
                     app:cardElevation="10dp">
 
                     <ImageView
+                        android:id="@+id/imageViewFantasia"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/hada" />
