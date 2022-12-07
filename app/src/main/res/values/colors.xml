@@ -9,4 +9,16 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparente">@android:color/transparent</color>
     <color name="azul">#A869F0</color>
+
+
+
+
+        <style name="Custom" parent="android:Theme.DeviceDefault.Dialog">
+            <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+            <item name="DialogTitleText">Updating…</item>
+            <item name="DialogSpotColor">@color/black</item>
+            <item name="DialogSpotCount">4</item>
+
+        </style>
+
 </resources>

@@ -2,12 +2,16 @@ package com.example.papeleriaclo3.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,11 +30,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 
 import javax.annotation.Nullable;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import dmax.dialog.SpotsDialog;
 
 public class PostActivity extends AppCompatActivity {
@@ -40,6 +48,7 @@ public class PostActivity extends AppCompatActivity {
     File getmImageFile2;
     private final int Gallery_REQUEST_CODE = 1;
     private final int Gallery_REQUEST_CODE_2 = 2;
+    private final int PHOTO_REQUEST_CODE = 3;
     Button mButtonPost;
     ImageProviders mImageProvider;
     TextInputEditText mtextInputTitle;
@@ -55,6 +64,14 @@ public class PostActivity extends AppCompatActivity {
     String mDescription="";
     AuthProviders mAuthProviders;
     AlertDialog mDialog;
+    CircleImageView mCircleImageView;
+    AlertDialog.Builder mBuilderSelector;
+    CharSequence options[];
+
+
+    String mAbsolutePhotePathc;
+    String mPhotoPathc;
+    File mPhotoFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +87,7 @@ public class PostActivity extends AppCompatActivity {
         mImageViewFantasia=findViewById(R.id.imageViewFantasia);
         mTextViewCategory=findViewById(R.id.TextViewCategory);
         mButtonPost=findViewById(R.id.btnPost);
+        mCircleImageView=findViewById(R.id.cirleimageback2);
 
 
 
@@ -83,6 +101,23 @@ public class PostActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .build();
 
+        mBuilderSelector=new AlertDialog.Builder(this);
+        mBuilderSelector.setTitle("Seleccione una opción");
+        options=new CharSequence[]{"Imagen de Galeria", "Tomar Foto"};
+
+
+
+
+        mCircleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(PostActivity.this,HomeActivity2.class);
+                startActivity(intent);
+            }
+        });
+
+
+
 
         mButtonPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,14 +130,16 @@ public class PostActivity extends AppCompatActivity {
         mImageViewPost1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGallery(Gallery_REQUEST_CODE);
+                selectOptionImage(Gallery_REQUEST_CODE);
+                //openGallery(Gallery_REQUEST_CODE);
             }
         });
 
         mImageViewPost2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGallery(Gallery_REQUEST_CODE_2);
+                selectOptionImage(Gallery_REQUEST_CODE_2);
+                //openGallery(Gallery_REQUEST_CODE_2);
             }
         });
 
@@ -141,6 +178,54 @@ public class PostActivity extends AppCompatActivity {
                 mTextViewCategory.setText(mCategory);
             }
         });
+    }
+
+    private void selectOptionImage(int requestCode) {
+        mBuilderSelector.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                if (which ==0){
+                    openGallery(requestCode);
+                }else if (which==1){
+                    TakePhoto();
+                }
+            }
+        });
+        mBuilderSelector.show();
+    }
+
+    private void TakePhoto() {
+        //Toast.makeText(this, "Selecciono tomar foto", Toast.LENGTH_SHORT).show();
+        Intent takePictureIntent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager())!=null){
+            File photoFile=null;
+            try {
+                photoFile=createPhotoFile();
+
+            }catch (Exception e){
+                Toast.makeText(this, "Error de archivo"+e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            if (photoFile !=null){
+                Uri photoUri= FileProvider.getUriForFile(PostActivity.this,"com.example.papeleriaclo3",photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(takePictureIntent, PHOTO_REQUEST_CODE);
+            }
+        }
+    }
+
+    private File createPhotoFile() throws IOException {
+        File storageDir= getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File photoFile=File.createTempFile(
+                new Date()+"_photo",
+                ".jpg",
+                storageDir
+
+
+       );
+        mPhotoPathc="File: "+photoFile.getAbsolutePath();
+        mAbsolutePhotePathc=photoFile.getAbsolutePath();
+        return photoFile;
     }
 
     private void ClickPost() {
@@ -268,6 +353,13 @@ public class PostActivity extends AppCompatActivity {
                 Log.d("ERROR", "Se produjo un error " + e.getMessage());
                 Toast.makeText(this, "Se produjo un error " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
+        }
+
+        if (requestCode==PHOTO_REQUEST_CODE && resultCode==RESULT_OK){
+            mImageFile=null;
+            mPhotoFile=new File(mAbsolutePhotePathc);
+            Picasso.with(PostActivity.this).load(mPhotoPathc).into(mImageViewPost1);
+
         }
 
     }
