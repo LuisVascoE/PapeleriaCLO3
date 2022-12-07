@@ -223,7 +223,7 @@ public class PostActivity extends AppCompatActivity {
 
 
        );
-        mPhotoPathc="File: "+photoFile.getAbsolutePath();
+        mPhotoPathc="file: "+photoFile.getAbsolutePath();
         mAbsolutePhotePathc=photoFile.getAbsolutePath();
         return photoFile;
     }
@@ -357,7 +357,7 @@ public class PostActivity extends AppCompatActivity {
 
         if (requestCode==PHOTO_REQUEST_CODE && resultCode==RESULT_OK){
             mImageFile=null;
-            mPhotoFile=new File(mAbsolutePhotePathc);
+            //mPhotoFile=new File(mAbsolutePhotePathc);
             Picasso.with(PostActivity.this).load(mPhotoPathc).into(mImageViewPost1);
 
         }
