@@ -104,7 +104,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/black">
+                android:textColorHint="@color/black"
+                app:hintTextColor="@color/black">
+
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputLibro"
@@ -113,7 +115,7 @@
                     android:background="@color/transparente"
                     android:hint="Nombre del Libro"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
 
                     />
 
@@ -140,7 +142,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/black">
+                android:textColorHint="@color/black"
+                app:hintTextColor="@color/black">
+
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputDescription"
@@ -149,7 +153,7 @@
                     android:background="@color/transparente"
                     android:hint="Descripción"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
 
                     />
 
@@ -161,10 +165,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CATEGORIAS"
+            android:textColor="@color/black"
             android:textAlignment="center"
             android:textStyle="italic"
             android:layout_marginTop="20dp"
             android:textSize="17sp"
+            android:textColorHint="@color/black"
             />
 
         <LinearLayout
