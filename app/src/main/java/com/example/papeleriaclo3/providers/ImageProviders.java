@@ -21,7 +21,7 @@ public class ImageProviders {
 
     public UploadTask save(Context context, File file){
         byte [] imageByte= CompressorBitmapImage.getImage(context,file.getPath(),500,500);
-        StorageReference storage=mStorage.child(new Date()+"jpg");
+        StorageReference storage=FirebaseStorage.getInstance().getReference().child(new Date()+"jpg");
         UploadTask task=storage.putBytes(imageByte);
         mStorage=storage;
         return task;
