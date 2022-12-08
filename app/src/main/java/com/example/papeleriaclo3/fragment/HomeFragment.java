@@ -3,14 +3,22 @@ package com.example.papeleriaclo3.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.papeleriaclo3.Activities.MainActivity;
 import com.example.papeleriaclo3.Activities.PostActivity;
 import com.example.papeleriaclo3.R;
+import com.example.papeleriaclo3.providers.AuthProviders;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -22,6 +30,8 @@ public class HomeFragment extends Fragment {
 
     View mView;
     FloatingActionButton mFab;
+    Toolbar mtoolbar;
+    AuthProviders mAuthProvider;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,6 +79,11 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         mView=inflater.inflate(R.layout.fragment_home, container, false);
         mFab=mView.findViewById(R.id.fab);
+        mtoolbar=mView.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mtoolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Publicaciones");
+        setHasOptionsMenu(true);
+        mAuthProvider=new AuthProviders();
 
 
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -84,5 +99,29 @@ public class HomeFragment extends Fragment {
     private void goToPost() {
         Intent intent=new Intent(getContext(), PostActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId()==R.id.itemLogout){
+            logout();
+        }
+        //return super.onOptionsItemSelected(item);
+        return true;
+    }
+
+    private void logout() {
+        mAuthProvider.logout();
+        Intent intent=new Intent(getContext(), MainActivity.class);
+        startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 }
