@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,12 +16,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.papeleriaclo3.Activities.MainActivity;
 import com.example.papeleriaclo3.Activities.PostActivity;
 import com.example.papeleriaclo3.R;
+import com.example.papeleriaclo3.adapters.PostAdapter;
+import com.example.papeleriaclo3.models.Post;
 import com.example.papeleriaclo3.providers.AuthProviders;
+import com.example.papeleriaclo3.providers.PostProvider;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.Query;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +41,11 @@ public class HomeFragment extends Fragment {
     FloatingActionButton mFab;
     Toolbar mtoolbar;
     AuthProviders mAuthProvider;
+
+    RecyclerView mRecyclerView;
+    PostProvider mPostProvider;
+    PostAdapter mPostAdapter;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,9 +95,13 @@ public class HomeFragment extends Fragment {
         mFab=mView.findViewById(R.id.fab);
         mtoolbar=mView.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(mtoolbar);
+        mRecyclerView=mView.findViewById(R.id.recycleviewhome);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Publicaciones");
         setHasOptionsMenu(true);
         mAuthProvider=new AuthProviders();
+        mPostProvider= new PostProvider();
 
 
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -96,10 +114,28 @@ public class HomeFragment extends Fragment {
         return mView;
     }
 
+
+
     private void goToPost() {
         Intent intent=new Intent(getContext(), PostActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Query query= mPostProvider.getAll();
+        FirestoreRecyclerOptions<Post>options=new FirestoreRecyclerOptions.Builder<Post>()
+                .setQuery(query,Post.class).build();
+
+        mPostAdapter=new PostAdapter(options,getContext());
+        mRecyclerView.setAdapter(mPostAdapter);
+        mPostAdapter.startListening();
+    }
+
+
+
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
